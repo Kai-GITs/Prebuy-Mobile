@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:prebuy_mob/pages/add_product_page.dart';
+import 'package:prebuy_mob/pages/product_list_page.dart';
+import 'package:prebuy_mob/widgets/left_drawer.dart';
 
 class MyHomePage extends StatelessWidget {
   MyHomePage({super.key});
@@ -33,6 +36,8 @@ class MyHomePage extends StatelessWidget {
             .colorScheme
             .primary,
       ),
+      // Tambahkan drawer di sisi kiri untuk navigasi cepat.
+      drawer: const LeftDrawer(),
       // Body halaman dengan padding di sekelilingnya.
       body: Padding(
         padding: const EdgeInsets.all(16.0),
@@ -159,8 +164,21 @@ class ItemCard extends StatelessWidget {
           ScaffoldMessenger.of(context)
             ..hideCurrentSnackBar()
             ..showSnackBar(
-                SnackBar(content: Text("Kamu telah menekan tombol ${item.name}!"))
+              SnackBar(content: Text("Kamu telah menekan tombol ${item.name}!")),
             );
+
+          // Navigasi ke halaman sesuai item yang dipilih.
+          if (item.name == 'Create Products') {
+            Navigator.push(
+              context,
+              MaterialPageRoute(builder: (context) => const AddProductPage()),
+            );
+          } else if (item.name == 'All Products' || item.name == 'My Products') {
+            Navigator.push(
+              context,
+              MaterialPageRoute(builder: (context) => const ProductListPage()),
+            );
+          }
         },
         // Container untuk menyimpan Icon dan Text
         child: Container(
